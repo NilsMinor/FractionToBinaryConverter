@@ -12,7 +12,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
 void MainWindow::on_pushButtonCalculate_released()
 {
     QString text =  ui->lineEditFraction->text();
@@ -21,7 +20,6 @@ void MainWindow::on_pushButtonCalculate_released()
 
     convertFractionToBinary ();
 }
-
 void MainWindow::convertFractionToBinary()
 {
     bits = ui->spinBoxBits->value();
@@ -31,7 +29,7 @@ void MainWindow::convertFractionToBinary()
     double  substraction = 0;
     double  remain = fraction_input;
     QString bitVektor = "";
-    int64_t registerValue = 0;
+    int registerValue = 0;
     double  calculatedValue = 0;
 
     for (int i= 1;i <= bits;i++)
@@ -42,7 +40,7 @@ void MainWindow::convertFractionToBinary()
         {
             remain = remain - substraction;
             bitVektor.append("1");
-            registerValue += qPow(2,i);
+            registerValue += qPow(2,bits- i);        // fixed recalc
             calculatedValue += substraction;
         }
         else
@@ -50,7 +48,6 @@ void MainWindow::convertFractionToBinary()
             bitVektor.append("0");
         }
     }
-
     error = 100 - (calculatedValue * 100) / fraction_input;
 
     ui->lineEditBitResult->setText(bitVektor);
@@ -58,7 +55,6 @@ void MainWindow::convertFractionToBinary()
     ui->labelError->setText(QString::number(calculatedValue));
     ui->labelErrorPercent->setText(QString::number(error,'f',4));
 }
-
 void MainWindow::on_pushButtonReset_released()
 {
     ui->lineEditBitRegister->setText("");
